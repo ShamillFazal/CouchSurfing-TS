@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.showDetails = exports.populateUser = exports.showReviewTotal = void 0;
+exports.getTopTwoReviews = exports.makeMultiple = exports.showDetails = exports.populateUser = exports.showReviewTotal = void 0;
 var reviewTotalDisplay = document.querySelector('#reviews');
 var returningUserDisplay = document.querySelector('#returning-user');
 var userNameDisplay = document.querySelector('#user');
 var enums_1 = require("./enums");
 function showReviewTotal(value, reviewer, isLoyalty) {
     var iconDisplay = enums_1.LoyaltyUser.GOLD_USER ? '⭐' : '';
-    reviewTotalDisplay.innerHTML = 'review total ' + value.toString() + '| last reviewed by ' + reviewer + ' ' + iconDisplay;
+    reviewTotalDisplay.innerHTML = value.toString() + ' review' + makeMultiple(value) + ' | last reviewed by ' + reviewer + ' ' + iconDisplay;
 }
 exports.showReviewTotal = showReviewTotal;
 function populateUser(isReturning, userName) {
@@ -25,3 +25,16 @@ function showDetails(value, element, price) {
     }
 }
 exports.showDetails = showDetails;
+function makeMultiple(value) {
+    if (value > 1 || value == 0) {
+        return 's';
+    }
+    else
+        return '';
+}
+exports.makeMultiple = makeMultiple;
+function getTopTwoReviews(reviews) {
+    var sortedReviews = reviews.sort(function (a, b) { return b.stars - a.stars; });
+    return sortedReviews.slice(0, 2);
+}
+exports.getTopTwoReviews = getTopTwoReviews;
